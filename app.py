@@ -52,7 +52,11 @@ with opcion1:
                     for i, b in enumerate(bullets, 1):
                         st.write(f"- {b}")
             else:
-                st.error(res.get("error", "Error desconocido."))
+                err = res.get("error", "Error desconocido.")
+                if "503" in err or "UNAVAILABLE" in err.upper() or "overloaded" in err.lower():
+                    st.warning("El modelo está saturado (503). Intenta de nuevo en unos segundos.")
+                else:
+                    st.error(err)
 
 with opcion2:
     text = st.text_area("Pega texto aquí", height=240, placeholder="Pega o escribe el contenido a resumir…")
@@ -76,4 +80,8 @@ with opcion2:
                     for i, b in enumerate(bullets, 1):
                         st.write(f"- {b}")
             else:
-                st.error(res.get("error", "Error desconocido."))
+                err = res.get("error", "Error desconocido.")
+                if "503" in err or "UNAVAILABLE" in err.upper() or "overloaded" in err.lower():
+                    st.warning("El modelo está saturado (503). Intenta de nuevo en unos segundos.")
+                else:
+                    st.error(err)
